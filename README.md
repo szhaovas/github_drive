@@ -1,1 +1,1 @@
-totally using github of its intended purpose lol
+totally using github for its intended purpose lol
