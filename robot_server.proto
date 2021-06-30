@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package robot_server;
+
+
+
+service  RobotServer {
+  rpc GetState(Empty)                     returns (State) {}
+  rpc SetState(State)                     returns (Success) {}
+  rpc SendAction(Action)                  returns (Success) {}
+  rpc SendActionGetState(Action)          returns (State) {}
+  rpc SendGoalGetPlan(MoveitGoal)         returns (MoveitPlan) {}
+  rpc StrictActionGetState(Action)        returns (State) {}
+}
+
+message Success {
+  bool success = 1;
+}
+
+message Empty {
+}
+
+message Action {
+  repeated float action   = 1;
+  bool success            = 2;
+}
+
+message State {
+  repeated float state                    = 1;
+  map<string, float> float_params         = 2;
+  map<string, string> string_params       = 3;
+  map<string, float> state_dict           = 4;
+  bool success                            = 5;
+}
+
+message MoveitGoal {
+  repeated float pose                     = 1;
+}
+
+message MoveitPlan {
+  MoveitGoal goal                         = 1;
+  repeated TrajPoint trajectory           = 2;
+  bool success                            = 3;
+}
+
+message TrajPoint {
+  repeated float positions                = 1;
+  repeated float velocities               = 2;
+  repeated float accelerations            = 3;
+  repeated float effort                   = 4;
+  float time_from_start                   = 5;
+}
+
